@@ -1,63 +1,45 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
-int main()
-{
+bool isSubset(int* a1, int m, int* a2, int n) {
+    for (int i = 0; i < n; i++) {
+        bool found = false;
+        for (int j = 0; j < m; j++) {
+            if (a2[i] == a1[j]) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main() {
     int m, n;
     cin >> m >> n;
-    char mine[100][100];
-    int sum[100][100] = { 0 };
-
+    int* a1 = new int[m];
+    int* a2 = new int[n];
     for (int i = 0; i < m; ++i)
     {
-        for (int j = 0; j < n; ++j)
-        {
-            cin >> mine[i][j];
-        }
+        cin >> a1[i];
     }
 
-    for (int i = 0; i < m; ++i)
+    for (int i = 0; i < n; ++i)
     {
-        for (int j = 0; j < n; ++j)
-        {
-            if (mine[i][j] == '.')
-            {
-                for (int k = -1; k <= 1; ++k)
-                {
-                    for (int h = -1; h <= 1; ++h)
-                    {
-                        int nx = i + k;
-                        int ny = j + h;
-                        if (nx >= 0 && nx < m && ny >= 0 && ny < n)
-                        {
-                            if (mine[nx][ny] == '*')
-                            {
-                                sum[i][j]++;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        cin >> a2[i];
     }
 
-    // Output the result
-    for (int i = 0; i < m; ++i)
-    {
-        for (int j = 0; j < n; ++j)
-        {
-            if (mine[i][j] == '*')
-            {
-                cout << '*';
-            }
-            else
-            {
-                cout << sum[i][j];
-            }
-            cout << " ";
-        }
-        cout << endl;
+    if (isSubset(a1, m, a2, n)) {
+        cout << "Yes" << endl;
+    }
+    else {
+        cout << "No" << endl;
     }
 
+    delete[] a1;
+    delete[] a2;
     return 0;
 }
